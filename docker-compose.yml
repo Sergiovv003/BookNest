@@ -1,0 +1,19 @@
+version: '3'
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: booknest
+    ports:
+      - '5432:5432'
+  server:
+    build: ./server
+    environment:
+      DATABASE_URL: postgres://username:password@db:5432/booknest
+      JWT_SECRET: changeme
+    ports:
+      - '3000:3000'
+    depends_on:
+      - db
